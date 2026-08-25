@@ -1,24 +1,21 @@
-import mammoth from 'mammoth'
-
 // ============================================================
 // LECTURA DEL FORMATO WORD QUE SUBE EL USUARIO
-// Extrae las líneas del .docx para saber qué información pide.
+// Extrae el documento COMPLETO, párrafo por párrafo, en orden.
 // ============================================================
+
+import mammoth from 'mammoth'
 
 export async function leerFormato(file) {
   const { value: html } = await mammoth.convertToHtml({ arrayBuffer: await file.arrayBuffer() })
-  // Convertimos el HTML a líneas de texto simples conservando el orden
-  const texto = html
-    .replace(/<\/(p|h1|h2|h3|li)>/gi, '\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ')
-  const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0)
-  return lineas
+  // Cada <p> del Word es un párrafo; conservamos orden y vacíos significativos
+  const parrafos = html
+    .split(/<\/p>/i)
+    .map(p => p.replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&').replace(/&lt;/g, '<')
+      .replace(/>/g, '>').replace(/&nbsp;/g, ' ')
+      .trim())
+  // Eliminamos vacíos al inicio/final pero conservamos estructura interna
+  while (parrafos.length && !parrafos[0]) parrafos.shift()
+  while (parrafos.length && !parrafos[parrafos.length - 1]) parrafos.pop()
+  return parrafos
 }
-
-// ¿Es una línea que pide un dato? (tiene ":", "___", o es corta tipo título de campo)
-export const esCampo = (linea) => /[:：]|_{2,}|\. ?_{2,}/.test(linea)
-
-// Limpia la línea para usarla como nombre de campo ante la IA
-export const limpiarCampo = (linea) =>
-  linea.replace(/[:：]+$/, '').replace(/_{2,}/g, '').trim()

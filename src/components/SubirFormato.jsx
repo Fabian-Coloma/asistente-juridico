@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { leerFormato, esCampo, limpiarCampo } from '../formato-word.js'
+import { leerFormato } from '../formato-word.js'
 
 // Casillero reutilizable para subir el formato Word del usuario
 export default function SubirFormato({ onFormato }) {
-  const [formato, setFormato] = useState(null) // {file, lineas, campos}
+  const [formato, setFormato] = useState(null) // {nombre, parrafos}
   const [leyendo, setLeyendo] = useState(false)
   const [error, setError] = useState('')
 
@@ -12,15 +12,9 @@ export default function SubirFormato({ onFormato }) {
     setLeyendo(true)
     setError('')
     try {
-      const lineas = await leerFormato(file)
-      const detectados = lineas.filter(esCampo).map(limpiarCampo)
-      // Si no hay líneas con ":", usamos todas las líneas como referencia
-      const f = {
-        file,
-        nombre: file.name,
-        lineas,
-        campos: detectados.length > 0 ? detectados : [],
-      }
+      const parrafos = await leerFormato(file)
+      const conPuntos = parrafos.filter(p => /\.{3,}|…|_{2,}/.test(p)).length
+      const f = { nombre: file.name, parrafos }
       setFormato(f)
       onFormato(f)
     } catch (e) {
@@ -37,7 +31,9 @@ export default function SubirFormato({ onFormato }) {
           onChange={e => elegir(e.target.files[0])} />
         <div className="text-3xl mb-1">📝</div>
         <p className="font-semibold text-amber-700">Subir formato que desea ser transcrito</p>
-        <p className="text-xs text-slate-400 mt-0.5">Archivo Word (.docx) con el orden exacto de la información</p>
+        <p className="text-xs text-slate-400 mt-0.5">
+          Word (.docx) con los espacios a llenar marcados con ……… o puntos suspensivos
+        </p>
       </label>
 
       {leyendo && <p className="text-sm text-slate-500">📖 Leyendo tu formato…</p>}
@@ -46,22 +42,11 @@ export default function SubirFormato({ onFormato }) {
       {formato && !leyendo && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm">
           <p className="font-semibold">✅ {formato.nombre}</p>
-          {formato.campos.length > 0 ? (
-            <>
-              <p className="text-xs text-slate-500 mt-1">
-                La IA llenará estos {formato.campos.length} casilleros detectados:
-              </p>
-              <div className="flex flex-wrap gap-1 mt-1.5">
-                {formato.campos.map((c, i) => (
-                  <span key={i} className="bg-white border rounded-full px-2 py-0.5 text-[11px]">{c}</span>
-                ))}
-              </div>
-            </>
-          ) : (
-            <p className="text-xs text-slate-500 mt-1">
-              Formato leído ({formato.lineas.length} líneas). La IA lo usará completo como guía.
-            </p>
-          )}
+          <p className="text-xs text-slate-500 mt-1">
+            Formato leído: {formato.parrafos.length} párrafos ·{' '}
+            {formato.parrafos.filter(p => /\.{3,}|…|_{2,}/.test(p)).length} con espacios por llenar.
+            La IA conservará tu estructura EXACTA y solo reemplazará los puntos suspensivos.
+          </p>
           <button onClick={() => { setFormato(null); onFormato(null) }}
             className="mt-2 text-xs text-red-500 hover:underline">✕ Quitar formato</button>
         </div>

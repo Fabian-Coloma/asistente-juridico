@@ -20,8 +20,8 @@ export default function SeccionVideo() {
     setError('')
     try {
       const { extraerConIA } = await import('../gemini.js')
-      const datos = await extraerConIA(formato, [video])
-      setResultado({ datos })
+      const parrafos = await extraerConIA(formato.parrafos, [video])
+      setResultado(parrafos)
     } catch (e) {
       console.error(e)
       setError('Error al escanear: ' + e.message)
@@ -75,9 +75,9 @@ export default function SeccionVideo() {
         )}
 
         {/* 4. Ver Word con el formato del usuario llenado */}
-        {resultado && (
+        {resultado && formato && (
           <>
-            <VerWord formato={formato} datos={resultado.datos} />
+            <VerWord formatoNombre={formato.nombre} parrafos={resultado} />
             <button onClick={() => setResultado(null)}
               className="w-full text-sm text-slate-500 hover:text-slate-700">
               ↺ Escanear de nuevo

@@ -4,8 +4,8 @@ import VerWord from './VerWord.jsx'
 
 export default function SeccionFotos() {
   const [fotos, setFotos] = useState([])
-  const [formato, setFormato] = useState(null)
-  const [resultado, setResultado] = useState(null) // {campos, datos}
+  const [formato, setFormato] = useState(null) // {nombre, parrafos}
+  const [resultado, setResultado] = useState(null) // string[] párrafos llenados
   const [escaneando, setEscaneando] = useState(false)
   const [error, setError] = useState('')
 
@@ -28,8 +28,8 @@ export default function SeccionFotos() {
     setError('')
     try {
       const { extraerConIA } = await import('../gemini.js')
-      const datos = await extraerConIA(formato, fotos)
-      setResultado({ datos })
+      const parrafos = await extraerConIA(formato.parrafos, fotos)
+      setResultado(parrafos)
     } catch (e) {
       console.error(e)
       setError('Error al escanear: ' + e.message)
@@ -47,7 +47,7 @@ export default function SeccionFotos() {
           <span className="text-3xl">📸</span>
           <div>
             <h2 className="text-xl font-bold">Sección Fotos</h2>
-            <p className="text-sm text-slate-500">Fotos de documentos + tu formato → Word llenado</p>
+            <p className="text-sm text-slate-500">Fotos del expediente + formato Word → sentencia llenada</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export default function SeccionFotos() {
           <button onClick={escanear} disabled={!listo || escaneando}
             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:opacity-90 disabled:opacity-40 shadow">
             {escaneando
-              ? '🔍 Escaneando… la IA está leyendo tus fotos y tu formato'
+              ? '🔍 Escaneando… la IA está leyendo tus fotos y llenando el formato'
               : !listo
                 ? '🔍 ESCANEAR (sube fotos y tu formato Word primero)'
                 : '🔍 ESCANEAR'}
@@ -93,9 +93,9 @@ export default function SeccionFotos() {
         )}
 
         {/* 4. Ver Word con el formato del usuario llenado */}
-        {resultado && (
+        {resultado && formato && (
           <>
-            <VerWord formato={formato} datos={resultado.datos} />
+            <VerWord formatoNombre={formato.nombre} parrafos={resultado} />
             <button onClick={() => setResultado(null)}
               className="w-full text-sm text-slate-500 hover:text-slate-700">
               ↺ Escanear de nuevo

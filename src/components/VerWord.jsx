@@ -3,46 +3,26 @@ import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } fro
 import { saveAs } from 'file-saver'
 
 // ============================================================
-// VER WORD: muestra el formato del usuario YA LLENADO por la IA
-// y permite descargarlo en .docx
+// VER WORD: muestra el formato del usuario YA LLENADO párrafo
+// por párrafo (misma estructura, puntos suspensivos reemplazados)
 // ============================================================
 
-// Sustituye los espacios en blanco de una línea por el valor extraído.
-// "DNI: ____" o "DNI:" → "DNI: 12345678"
-function llenarLinea(linea, datos, campos) {
-  // Busca a qué campo corresponde esta línea
-  const campo = campos.find(c => linea.toLowerCase().includes(c.toLowerCase()))
-  if (!campo) return linea
-  const valor = String(datos[campo] ?? '').trim()
-  if (!valor || valor === 'NO ENCONTRADO') return linea.replace(/_{2,}/g, '(sin dato)')
-  // Reemplaza los guiones bajos por el valor; si no hay, lo agrega tras los ":"
-  if (/_{2,}/.test(linea)) return linea.replace(/_{2,}/, ' ' + valor)
-  if (/[:：]\s*$/.test(linea)) return linea + ' ' + valor
-  return linea + ': ' + valor
-}
-
-export default function VerWord({ formato, datos }) {
+export default function VerWord({ formatoNombre, parrafos }) {
   const [abierto, setAbierto] = useState(false)
-  const lineasLlenas = formato.lineas.map(l => llenarLinea(l, datos, formato.campos))
 
   const descargar = async () => {
     const doc = new Document({
       sections: [{
-        children: [
-          new Paragraph({
-            text: formato.nombre.replace(/\.docx$/i, ''),
-            heading: HeadingLevel.HEADING_1,
-            alignment: AlignmentType.CENTER,
-          }),
-          new Paragraph({ text: '' }),
-          ...lineasLlenas.map(l => new Paragraph({
-            children: [new TextRun(l)],
-            spacing: { after: 200 },
-          })),
-        ],
+        children: parrafos.map(p => p.trim()
+          ? new Paragraph({
+              children: [new TextRun(p)],
+              spacing: { after: 200 },
+              alignment: AlignmentType.JUSTIFIED,
+            })
+          : new Paragraph({ text: '' })),
       }],
     })
-    saveAs(await Packer.toBlob(doc), formato.nombre.replace(/\.docx$/i, '-LLENADO.docx'))
+    saveAs(await Packer.toBlob(doc), formatoNombre.replace(/\.docx$/i, '-LLENADO.docx'))
   }
 
   return (
@@ -59,11 +39,13 @@ export default function VerWord({ formato, datos }) {
       </div>
 
       {abierto && (
-        <div className="border rounded-xl bg-white shadow-inner p-8 max-h-[500px] overflow-y-auto">
-          {/* Vista tipo hoja de Word */}
-          <div className="bg-white mx-auto max-w-2xl border border-slate-200 shadow-sm p-10 font-serif text-slate-900 leading-relaxed whitespace-pre-wrap">
-            {lineasLlenas.map((l, i) => (
-              l.trim() ? <p key={i}>{l}</p> : <br key={i} />
+        <div className="border rounded-xl bg-white shadow-inner p-4 max-h-[560px] overflow-y-auto">
+          <p className="text-[11px] text-slate-400 mb-2">
+            {parrafos.length} párrafos · los ……… que quedan significan "dato no encontrado en el material"
+          </p>
+          <div className="bg-white mx-auto max-w-2xl border border-slate-200 shadow-sm p-10 font-serif text-slate-900 leading-relaxed">
+            {parrafos.map((p, i) => (
+              p.trim() ? <p key={i} className="mb-3 text-justify">{p}</p> : <br key={i} />
             ))}
           </div>
         </div>
