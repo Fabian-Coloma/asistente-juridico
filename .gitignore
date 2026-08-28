@@ -1,1 +1,3 @@
 node_modules\n.env\n.env.local\ndist\nprueba-motor.cjs\nvercel-out.txt
+
+.vercel
