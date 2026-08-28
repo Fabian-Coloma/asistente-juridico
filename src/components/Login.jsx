@@ -34,8 +34,6 @@ export default function Login({ onLogin }) {
         className="absolute inset-0 bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${fondo})`, backgroundColor: '#000' }}
       />
-      {/* velo sutil solo en el centro para que el login y el texto se lean sin tapar las estrellas */}
-      <div className="absolute inset-0 bg-black/30" />
 
       <div className="relative w-full max-w-sm animate-float z-10">
         <div className="text-center mb-7">
