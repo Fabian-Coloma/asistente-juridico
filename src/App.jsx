@@ -53,7 +53,8 @@ export default function App({ onLogout }) {
       </main>
 
       <footer className="text-center text-xs text-slate-400 pb-10 pt-4">
-        Hecho con 💗 para la asistente judicial · Powered by Gemini
+        <div className="font-medium text-slate-500">Con mucho amor, descansa y estudia mas</div>
+        <div className="text-rose-500 font-bold mt-0.5">TE AMO</div>
       </footer>
     </div>
   )
