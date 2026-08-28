@@ -27,12 +27,15 @@ export default function Login({ onLogin }) {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: `url(${fondo})` }}
+      className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-black"
     >
-      {/* overlay oscuro degradado para que el texto se lea bien sobre las estrellas */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/70" />
-      <div className="absolute inset-0 bg-fuchsia-900/20 mix-blend-multiply" />
+      {/* foto de estrellas COMPLETA (sin recorte), centrada, fondo negro en los bordes */}
+      <div
+        className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${fondo})`, backgroundColor: '#000' }}
+      />
+      {/* velo sutil solo en el centro para que el login y el texto se lean sin tapar las estrellas */}
+      <div className="absolute inset-0 bg-black/30" />
 
       <div className="relative w-full max-w-sm animate-float z-10">
         <div className="text-center mb-7">
