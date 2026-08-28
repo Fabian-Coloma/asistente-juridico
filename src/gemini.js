@@ -1,17 +1,8 @@
 import { GoogleGenAI } from '@google/genai'
 
-// La clave se resuelve en runtime vía /api/config (serverless, oculta)
-let _ai = null
-async function getAI() {
-  if (_ai) return _ai
-  const r = await fetch('/api/config')
-  const { key } = await r.json()
-  _ai = new GoogleGenAI({ apiKey: key })
-  return _ai
-}
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY })
 
 export async function extraerConIA(parrafos, fuentes) {
-  const ai = await getAI()
   const partes = []
   for (const f of fuentes) {
     partes.push({ inlineData: { mimeType: f.file.type, data: await fileToBase64(f.file) } })

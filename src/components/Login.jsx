@@ -1,34 +1,31 @@
 import { useState } from 'react'
 
-// Clave oculta: el serverless /api/login la compara. Aquí solo va el usuario (público, inofensivo).
+// Login validado en el cliente contra variables de entorno (sin base de datos).
+// Nota: para una sola usuaria esto es suficiente; la clave vive en VITE_ (ya expuesta
+// como la API de Gemini). Si crece a varios clientes, migrar a Supabase Auth.
+const USUARIO = import.meta.env.VITE_APP_USER || 'llelsitapreciosa02'
+const CLAVE = import.meta.env.VITE_APP_PASS || '020526'
+
 export default function Login({ onLogin }) {
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const entrar = async (e) => {
+  const entrar = (e) => {
     e.preventDefault()
     setLoading(true)
     setError('')
-    try {
-      const r = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user, pass }),
-      })
-      if (r.ok) {
-        const { token } = await r.json()
-        localStorage.setItem('aj_token', token)
+    // pequeña simulación de red para UX
+    setTimeout(() => {
+      if (user === USUARIO && pass === CLAVE) {
+        localStorage.setItem('aj_token', btoa(`${USUARIO}:${Date.now()}`))
         onLogin()
       } else {
         setError('Usuario o clave incorrectos 🌸')
       }
-    } catch {
-      setError('No se pudo conectar. Intenta de nuevo.')
-    } finally {
       setLoading(false)
-    }
+    }, 400)
   }
 
   return (
