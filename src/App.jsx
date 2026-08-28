@@ -2,59 +2,58 @@ import { useState } from 'react'
 import SeccionFotos from './components/SeccionFotos.jsx'
 import SeccionVideo from './components/SeccionVideo.jsx'
 
-// Color tokens femeninos y elegantes
-const S = {
-  navActive: 'bg-rose-500 text-white shadow',
-  navIdle: 'text-slate-500 hover:bg-rose-50',
-  fotos: 'from-rose-500 to-pink-500',
-  video: 'from-fuchsia-500 to-purple-500',
-  formato: 'border-amber-300 bg-amber-50/60',
-}
-
 export default function App({ onLogout }) {
   const [tab, setTab] = useState('fotos')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-fuchsia-50 text-slate-800">
-      <header className="bg-white/70 backdrop-blur border-b border-rose-100 px-6 py-4 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-aurora text-slate-800">
+      {/* HEADER cristal */}
+      <header className="sticky top-0 z-20 backdrop-blur-xl bg-white/50 border-b border-white/60 shadow-sm">
+        <div className="max-w-4xl mx-auto px-5 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">🌸</span>
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-400 to-fuchsia-500 flex items-center justify-center text-xl shadow-lg animate-pulse-ring">
+              ⚖️
+            </div>
             <div>
-              <h1 className="text-lg font-bold bg-gradient-to-r from-rose-500 to-fuchsia-500 bg-clip-text text-transparent">
+              <h1 className="text-lg font-bold bg-gradient-to-r from-rose-500 via-fuchsia-500 to-purple-500 bg-clip-text text-transparent leading-tight">
                 Asistente Judicial
               </h1>
-              <p className="text-[11px] text-slate-400">
-                Fotos/video + tu formato → sentencia limpia con IA
-              </p>
+              <p className="text-[11px] text-slate-400 -mt-0.5">IA que llena tus sentencias con elegancia</p>
             </div>
           </div>
           <button onClick={onLogout}
-            className="text-xs font-semibold text-slate-400 hover:text-rose-500 flex items-center gap-1 transition">
-            ⏻ Cerrar sesión
+            className="group flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-rose-500 transition px-3 py-1.5 rounded-xl hover:bg-rose-50">
+            <span className="transition group-hover:rotate-180 duration-500">⏻</span> Cerrar sesión
           </button>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 pt-6">
-        <div className="flex gap-2 bg-white/80 backdrop-blur p-1.5 rounded-2xl shadow-sm border border-rose-100 w-fit">
+      <div className="max-w-4xl mx-auto px-5 pt-7">
+        {/* TABS tipo píldora flotante */}
+        <div className="inline-flex p-1.5 rounded-2xl bg-white/60 backdrop-blur border border-white/70 shadow-md">
           <button onClick={() => setTab('fotos')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition ${tab === 'fotos' ? S.navActive : S.navIdle}`}>
+            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${
+              tab === 'fotos'
+                ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-200'
+                : 'text-slate-500 hover:text-rose-500'}`}>
             🌷 Fotos
           </button>
           <button onClick={() => setTab('video')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition ${tab === 'video' ? 'bg-fuchsia-500 text-white shadow' : S.navIdle}`}>
+            className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${
+              tab === 'video'
+                ? 'bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white shadow-lg shadow-fuchsia-200'
+                : 'text-slate-500 hover:text-fuchsia-500'}`}>
             🎬 Video
           </button>
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto p-6 pt-4 space-y-6">
+      <main className="max-w-4xl mx-auto p-5 pt-5 space-y-6">
         {tab === 'fotos' ? <SeccionFotos /> : <SeccionVideo />}
       </main>
 
-      <footer className="text-center text-xs text-slate-400 pb-8">
-        Hecho con 💗 para la asistente judicial · IA: Gemini
+      <footer className="text-center text-xs text-slate-400 pb-10 pt-4">
+        Hecho con 💗 para la asistente judicial · Powered by Gemini
       </footer>
     </div>
   )

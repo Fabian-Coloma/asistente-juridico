@@ -20,17 +20,17 @@ export default function VerWord({ formatoNombre, parrafos }) {
     <div className="space-y-3">
       <div className="flex gap-2">
         <button onClick={() => setAbierto(!abierto)}
-          className="flex-1 bg-emerald-500 text-white py-3 rounded-2xl font-bold hover:bg-emerald-600 shadow">
+          className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-3 rounded-2xl font-bold hover:opacity-90 hover:scale-[1.01] active:scale-95 transition-all shadow-lg shadow-emerald-200/50">
           {abierto ? '🙈 Ocultar Word' : '👁️ Ver Word'}
         </button>
         <button onClick={descargar}
-          className="flex-1 bg-slate-800 text-white py-3 rounded-2xl font-bold hover:bg-slate-700 shadow">
-          📄 Descargar Word
+          className="flex-1 bg-slate-800 text-white py-3 rounded-2xl font-bold hover:bg-slate-700 hover:scale-[1.01] active:scale-95 transition-all shadow-lg">
+          📄 Descargar
         </button>
       </div>
 
       {abierto && (
-        <div className="border border-rose-100 rounded-2xl bg-white shadow-inner p-4 max-h-[560px] overflow-y-auto">
+        <div className="animate-float border border-rose-100 rounded-3xl bg-white/80 backdrop-blur shadow-inner p-4 max-h-[560px] overflow-y-auto">
           <p className="text-[11px] text-slate-400 mb-2">
             {parrafos.length} párrafos · los ……… que quedan = dato no encontrado en el material
           </p>
