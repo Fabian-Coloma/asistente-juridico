@@ -1,7 +1,5 @@
 {
-  "security": {
-    "deploymentProtection": {
-      "enabled": false
-    }
+  "functions": {
+    "api/*.js": { "runtime": "nodejs@18" }
   }
 }
