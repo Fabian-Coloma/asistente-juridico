@@ -1,7 +1,1 @@
-node_modules
-dist
-.env
-*.local
-
-.vercel
-prueba-motor.cjs
+node_modules\n.env\n.env.local\ndist\nprueba-motor.cjs\nvercel-out.txt
