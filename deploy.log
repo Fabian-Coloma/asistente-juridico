@@ -1,0 +1,71 @@
+Vercel CLI 59.9.1 (Node.js 24.19.0)
+Deploying asistente-juridico
+Uploading [--------------------] (0.0B/1.4MB)
+Uploading [=====---------------] (362.1KB/1.4MB)
+Uploading [==========----------] (714.1KB/1.4MB)
+Uploading [===============-----] (1.0MB/1.4MB)
+Uploading [====================] (1.4MB/1.4MB)
+  Inspect         https://vercel.com/fabian-coloma30-s-projects/asistente-juridico/Wnie7Fxi5oWtu6UfGuq1rz8L2UiV
+  Production      https://asistente-juridico-kn6ljnaud-fabian-coloma30-s-projects.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 2 cores, 8 GB
+Retrieving list of deployment files...
+Skipping build cache, deployment was triggered without cache.
+Downloading 29 deployment files...
+Running "vercel build"
+Vercel CLI 59.3.0
+Running "install" command: `npm install`...
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+added 150 packages, and audited 151 packages in 3s
+17 packages are looking for funding
+run `npm fund` for details
+found 0 vulnerabilities
+npm warn allow-scripts 3 packages have install scripts not yet covered by allowScripts:
+npm warn allow-scripts   @google/genai@2.18.0 (preinstall: echo 'preinstall: no-op')
+npm warn allow-scripts   esbuild@0.25.12 (postinstall: node install.js)
+npm warn allow-scripts   protobufjs@7.6.5 (postinstall: node scripts/postinstall)
+npm warn allow-scripts
+npm warn allow-scripts Run `npm approve-scripts --allow-scripts-pending` to review, or `npm approve-scripts <pkg>` to allow.
+> asistente-judicial@0.1.0 build
+> vite build
+vite v6.4.3 building for production...
+transforming...
+Found 1 warning while optimizing generated CSS:
+│   }
+│ }
+│ @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap');
+┆        ^-- @import rules must precede all rules aside from @charset and @layer statements
+┆
+│ :root {
+│   font-family: 'Quicksand', 'Nunito', ui-sans-serif, system-ui, sans-serif;
+[2K[1A[2K[G  Production      https://asistente-juridico-kn6ljnaud-fabian-coloma30-s-projects.vercel.app
+Completing…
+▲ Aliased         https://asistente-juridico-plum.vercel.app
+{
+  "status": "ok",
+  "deployment": {
+    "id": "dpl_Wnie7Fxi5oWtu6UfGuq1rz8L2UiV",
+    "url": "https://asistente-juridico-kn6ljnaud-fabian-coloma30-s-projects.vercel.app",
+    "inspectorUrl": "https://vercel.com/fabian-coloma30-s-projects/asistente-juridico/Wnie7Fxi5oWtu6UfGuq1rz8L2UiV",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_Wnie7Fxi5oWtu6UfGuq1rz8L2UiV"
+  },
+  "message": "Deployment asistente-juridico-kn6ljnaud-fabian-coloma30-s-projects.vercel.app ready.",
+  "next": [
+    {
+      "command": "vercel curl https://asistente-juridico-kn6ljnaud-fabian-coloma30-s-projects.vercel.app",
+      "when": "Verify deployment, including when Deployment Protection is enabled"
+    },
+    {
+      "command": "vercel inspect asistente-juridico-kn6ljnaud-fabian-coloma30-s-projects.vercel.app",
+      "when": "Inspect deployment"
+    },
+    {
+      "command": "vercel deploy --prod",
+      "when": "Promote to production"
+    }
+  ]
+}

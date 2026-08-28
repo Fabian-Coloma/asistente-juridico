@@ -19,6 +19,7 @@ REGLAS ABSOLUTAS:
 5. PROHIBIDO dejar puntos suspensivos sin llenar si el dato existe en el material; si NO existe, deja los puntos suspensivos tal como estaban.
 6. Conserva intactos todos los fundamentos legales y citas. No los modifiques ni los copies dos veces.
 7. Sin numeración extra, comentarios ni explicaciones: solo el documento final.
+8. MAYÚSCULAS EN NOMBRES PROPIOS: la PRIMERA letra de cada nombre de PERSONA, CIUDAD, DISTRITO, PROVINCIA, PAÍS y cualquier lugar geográfico debe ir en MAYÚSCULA. Ejemplos: "maría gonzález" → "María González", "lima" → "Lima", "perú" → "Perú". Aplica esto tanto a los nombres que llenes como a los que ya vengan en el formato.
 
 FORMATO VACÍO (un párrafo por línea, separados por <<<P>>>):
 ${parrafos.map(p => p + ' <<<P>>>').join('\n')}
