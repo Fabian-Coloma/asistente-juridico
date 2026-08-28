@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import fondo from '../assets/fondo-login.webp'
 
 const USUARIO = import.meta.env.VITE_APP_USER || 'llelsitapreciosa02'
 const CLAVE = import.meta.env.VITE_APP_PASS || '020526'
@@ -25,53 +26,60 @@ export default function Login({ onLogin }) {
   }
 
   return (
-    <div className="min-h-screen bg-aurora flex items-center justify-center px-4 relative overflow-hidden">
-      {/* burbujas decorativas */}
-      <div className="absolute -top-24 -left-24 w-72 h-72 bg-rose-300/30 rounded-full blur-3xl" />
-      <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-fuchsia-300/30 rounded-full blur-3xl" />
+    <div
+      className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: `url(${fondo})` }}
+    >
+      {/* overlay oscuro degradado para que el texto se lea bien sobre las estrellas */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/70" />
+      <div className="absolute inset-0 bg-fuchsia-900/20 mix-blend-multiply" />
 
-      <div className="relative w-full max-w-sm animate-float">
+      <div className="relative w-full max-w-sm animate-float z-10">
         <div className="text-center mb-7">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-rose-400 to-fuchsia-500 text-4xl shadow-xl shadow-rose-200/60 mb-4 animate-pop">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-white/15 backdrop-blur-xl text-4xl shadow-xl border border-white/30 mb-4 animate-pop">
             ⚖️
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-500 via-fuchsia-500 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-200 via-white to-fuchsia-200 bg-clip-text text-transparent drop-shadow">
             Asistente Judicial
           </h1>
-          <p className="text-sm text-slate-400 mt-1">Tu asistente inteligente de sentencias</p>
+          <p className="text-sm text-white/70 mt-1 drop-shadow">Tu asistente inteligente de sentencias</p>
         </div>
 
-        <form onSubmit={entrar} className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl shadow-rose-100/60 border border-white/70 p-8 space-y-5">
+        <form onSubmit={entrar} className="bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/25 p-8 space-y-5">
           <div>
-            <label className="text-xs font-semibold text-slate-500 ml-1">Usuario</label>
+            <label className="text-xs font-semibold text-white/80 ml-1">Usuario</label>
             <input value={user} onChange={e => setUser(e.target.value)}
-              className="w-full mt-1.5 bg-white/80 border border-rose-100 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent transition shadow-inner"
+              className="w-full mt-1.5 bg-white/15 border border-white/25 rounded-2xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-rose-300/70 focus:border-transparent transition shadow-inner"
               placeholder="tu usuario" autoFocus />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-500 ml-1">Clave</label>
+            <label className="text-xs font-semibold text-white/80 ml-1">Clave</label>
             <input type="password" value={pass} onChange={e => setPass(e.target.value)}
-              className="w-full mt-1.5 bg-white/80 border border-rose-100 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-transparent transition shadow-inner"
+              className="w-full mt-1.5 bg-white/15 border border-white/25 rounded-2xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-rose-300/70 focus:border-transparent transition shadow-inner"
               placeholder="••••••" />
           </div>
 
           {error && (
-            <div className="animate-float text-sm text-rose-600 bg-rose-50 border border-rose-100 rounded-xl px-3 py-2 text-center">
+            <div className="animate-float text-sm text-rose-200 bg-rose-500/20 border border-rose-300/30 rounded-xl px-3 py-2 text-center">
               {error}
             </div>
           )}
 
           <button disabled={loading}
-            className="w-full bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white py-3.5 rounded-2xl font-bold hover:opacity-90 hover:scale-[1.02] active:scale-95 disabled:opacity-60 transition-all duration-200 shadow-lg shadow-rose-200/50">
+            className="w-full bg-gradient-to-r from-rose-500 to-fuchsia-500 text-white py-3.5 rounded-2xl font-bold hover:opacity-90 hover:scale-[1.02] active:scale-95 disabled:opacity-60 transition-all duration-200 shadow-lg shadow-rose-900/40">
             {loading ? (
               <span className="inline-flex items-center gap-2"><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin-slow" /> Entrando…</span>
             ) : 'Entrar 💗'}
           </button>
 
-          <p className="text-center text-xs text-slate-300 pt-1">
-            💡 Indicio de clave: <span className="font-medium text-rose-400">chinita</span>
+          <p className="text-center text-xs text-white/60 pt-1">
+            💡 Indicio de clave: <span className="font-medium text-rose-300">chinita</span>
           </p>
         </form>
+
+        <p className="text-center text-sm text-white/80 mt-6 font-medium tracking-wide drop-shadow">
+          Bajo estas estrellas inicio nuestra historia ♥
+        </p>
       </div>
     </div>
   )
